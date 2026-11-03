@@ -118,12 +118,14 @@
 
   /* 7. video mockup: autoplay saat tampak, pause saat keluar */
   document.querySelectorAll('video').forEach(v => {
-    v.muted = true; v.playsInline = true;
-    if (v.preload === 'none') v.preload = 'metadata';
+    v.muted = true; v.playsInline = true; v.autoplay = true;
+    if (v.preload === 'none') v.preload = 'auto';
+    const tryPlay = () => v.play().catch(() => {});
+    if (v.readyState >= 3) tryPlay(); else v.addEventListener('canplay', tryPlay, { once: true });
     if (reduce) return;
     const io = new IntersectionObserver(es => es.forEach(e => {
-      e.isIntersecting ? v.play().catch(() => {}) : v.pause();
-    }), { threshold: .15 });
+      e.isIntersecting ? tryPlay() : v.pause();
+    }), { threshold: .05 });
     io.observe(v);
   });
 })();
