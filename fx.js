@@ -1,3 +1,22 @@
+/* 0. router breakpoint: <810 → versi mobile, >=810 → desktop */
+(() => {
+  const inMobile = location.pathname.indexOf('/m/') !== -1;
+  const wantMobile = innerWidth < 810;
+  if (wantMobile === inMobile) return;
+  location.replace(wantMobile ? (inMobile ? location.pathname : 'm/index.html') : '../index.html');
+})();
+setTimeout(() => {
+  const inMobile = location.pathname.indexOf('/m/') !== -1;
+  if ((innerWidth < 810) !== inMobile) location.replace((innerWidth < 810) ? location.pathname.replace(/\/?index\.html$/, '') + '/m/index.html' : '../index.html');
+}, 500);
+addEventListener('resize', () => {
+  clearTimeout(window.__rt);
+  window.__rt = setTimeout(() => {
+    const inMobile = location.pathname.indexOf('/m/') !== -1;
+    if ((innerWidth < 810) !== inMobile) location.reload();
+  }, 250);
+});
+
 /* Mekanisme animasi billow.so, ditulis ulang tanpa runtime Framer.
    Nilai diambil dari sumber asli (lihat MOTION-TOKENS.md di teardown). */
 (() => {
@@ -44,7 +63,7 @@
     const tick = () => {
       raf = 0;
       const y = scrollY;
-      heroImg.style.transform = `translate(-50%, ${(-9 - y * .05).toFixed(2)}px)`;
+      heroImg.style.transform = `translate(-50%, ${(y * -.05).toFixed(2)}px)`;
     };
     addEventListener('scroll', () => { if (!raf) raf = requestAnimationFrame(tick); }, { passive: true });
   }
@@ -110,6 +129,7 @@
         tab.scrollIntoView({ inline: 'center', block: 'nearest', behavior: reduce ? 'auto' : 'smooth' });
       });
     });
+    strip.scrollLeft = 0;
     let down = false, startX = 0, startL = 0;
     strip.style.cursor = 'grab';
     strip.addEventListener('pointerdown', e => { down = true; startX = e.clientX; startL = strip.scrollLeft; strip.setPointerCapture(e.pointerId); strip.style.cursor = 'grabbing'; });

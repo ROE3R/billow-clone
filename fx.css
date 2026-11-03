@@ -64,6 +64,10 @@ a:focus-visible, button:focus-visible, [data-highlight]:focus-visible {
 
 /* tab Why Switch: satu varian konten per tab */
 .why-var { display: none; }
+.why-var { flex-flow: row; }
+.why-var.is-on { display: block; }
+.why-var > .framer-xdb5ed { width: 100%; }
+.why-var { overflow: hidden; }
 .why-var.is-on { display: block; }
 .why-var [data-highlight] { cursor: pointer; }
 
@@ -77,4 +81,15 @@ a:focus-visible, button:focus-visible, [data-highlight]:focus-visible {
 @media (max-width: 809.98px) {
   .why-var [data-framer-name="Phone"] { display: block; }
   .why-var [data-framer-name="Desktop"] { display: none; }
+}
+
+/* konten varian dipatok ke lebar aslinya supaya tinggi tidak melar */
+@media (min-width: 810px) {
+  .why-var { max-width: 1072px; margin: 0 auto; }
+  .why-var-group { margin-top: -41px; }
+  .why-var .framer-xdb5ed, .why-var .framer-1aun7bu { width: 1072px; max-width: 100%; }
+}
+
+@media (max-width: 809.98px) {
+  .framer-12mu1d9 { padding: 0 16px 0 24px !important; justify-content: flex-start !important; width: 100% !important; max-width: 100% !important; min-width: 0 !important; }
 }
