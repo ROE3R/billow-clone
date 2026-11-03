@@ -79,9 +79,37 @@
     top.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); } });
   });
 
-  /* 5. strip tab: geser + pilih */
-  const strip = document.querySelector('.framer-12mu1d9');
-  if (strip) {
+  /* 5. tab Why Switch: strip bisa digeser + ganti varian konten */
+  const NAMES = ['Freelancers', 'Studios', 'Agencies', 'Creators', 'Consultants'];
+  const section = document.querySelector('[data-framer-name="Why Switch"]');
+  const group = section && section.querySelector('.why-var-group');
+  const strip = section && section.querySelector('.framer-12mu1d9');
+  if (strip && group) {
+    const tabs = [...strip.querySelectorAll('[data-highlight]')].filter(x => NAMES.includes(x.innerText.trim()));
+    const deactivate = tab => {
+      tab.setAttribute('data-framer-name', 'Default');
+      tab.style.removeProperty('--border-color');
+      tab.style.removeProperty('background-color');
+      const p = tab.querySelector('p');
+      if (p) { p.style.removeProperty('--extracted-r6o4lv'); p.style.removeProperty('--framer-text-color'); }
+    };
+    const activate = tab => {
+      tab.setAttribute('data-framer-name', 'Active');
+      tab.style.setProperty('--border-color', '#0080ff');
+      tab.style.setProperty('background-color', 'rgba(0,127.5,255,.039)');
+      const p = tab.querySelector('p');
+      if (p) { p.style.setProperty('--extracted-r6o4lv', '#0080ff'); p.style.setProperty('--framer-text-color', '#0080ff'); }
+    };
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const target = [...group.children].find(c => c.dataset.var === tab.innerText.trim());
+        if (!target) return;
+        [...group.children].forEach(c => c.classList.toggle('is-on', c === target));
+        tabs.forEach(deactivate);
+        activate(tab);
+        tab.scrollIntoView({ inline: 'center', block: 'nearest', behavior: reduce ? 'auto' : 'smooth' });
+      });
+    });
     let down = false, startX = 0, startL = 0;
     strip.style.cursor = 'grab';
     strip.addEventListener('pointerdown', e => { down = true; startX = e.clientX; startL = strip.scrollLeft; strip.setPointerCapture(e.pointerId); strip.style.cursor = 'grabbing'; });
@@ -90,15 +118,6 @@
     strip.addEventListener('wheel', e => {
       if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) { strip.scrollLeft += e.deltaY; e.preventDefault(); }
     }, { passive: false });
-    strip.querySelectorAll('[data-highlight]').forEach(tab => {
-      tab.addEventListener('click', () => {
-        strip.querySelectorAll('[data-highlight]').forEach(t => {
-          t.classList.remove('framer-v-1ifwjco');
-        });
-        tab.classList.add('framer-v-1ifwjco');
-        tab.scrollIntoView({ inline: 'center', block: 'nearest', behavior: reduce ? 'auto' : 'smooth' });
-      });
-    });
   }
 
   /* 6. burger → drawer */

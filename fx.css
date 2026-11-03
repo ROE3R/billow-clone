@@ -61,3 +61,20 @@ a:focus-visible, button:focus-visible, [data-highlight]:focus-visible {
   a[data-framer-name="Primary"] > .fx-glare { display: none; }
   .framer-1ifwjco[data-open="true"] > .framer-7fp0d2 { animation: none; }
 }
+
+/* tab Why Switch: satu varian konten per tab */
+.why-var { display: none; }
+.why-var.is-on { display: block; }
+.why-var [data-highlight] { cursor: pointer; }
+
+/* pil tab Why Switch: anak strip langsung, tidak melar */
+.fx-tab-wrap { flex: none; width: auto; }
+.framer-12mu1d9 { display: flex; flex-flow: row; align-items: center; gap: 12px; overflow-x: auto; scrollbar-width: none; }
+.framer-12mu1d9::-webkit-scrollbar { display: none; }
+
+/* konten varian memuat blok Desktop & Phone berdampingan: tampilkan satu saja */
+.why-var [data-framer-name="Phone"] { display: none; }
+@media (max-width: 809.98px) {
+  .why-var [data-framer-name="Phone"] { display: block; }
+  .why-var [data-framer-name="Desktop"] { display: none; }
+}
