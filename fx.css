@@ -93,3 +93,10 @@ a:focus-visible, button:focus-visible, [data-highlight]:focus-visible {
 @media (max-width: 809.98px) {
   .framer-12mu1d9 { padding: 0 16px 0 24px !important; justify-content: flex-start !important; width: 100% !important; max-width: 100% !important; min-width: 0 !important; }
 }
+
+@media (max-width: 809.98px) {
+  .why-var[data-var="Freelancers"], .why-var[data-var="Agencies"],
+  .why-var[data-var="Creators"], .why-var[data-var="Consultants"] { height: 742px; overflow: hidden; }
+  .why-var[data-var="Studios"] { height: 684px; overflow: hidden; }
+  .why-var-group { margin-top: -66px; }
+}

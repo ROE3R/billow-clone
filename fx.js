@@ -63,7 +63,8 @@ addEventListener('resize', () => {
     const tick = () => {
       raf = 0;
       const y = scrollY;
-      heroImg.style.transform = `translate(-50%, ${(y * -.05).toFixed(2)}px)`;
+      const base = innerWidth < 810 ? 36 : 0;
+      heroImg.style.transform = `translate(-50%, ${(base - y * .05).toFixed(2)}px)`;
     };
     addEventListener('scroll', () => { if (!raf) raf = requestAnimationFrame(tick); }, { passive: true });
   }
