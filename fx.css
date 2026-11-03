@@ -1,0 +1,63 @@
+/* ——— lapisan animasi pengganti runtime Framer ——— */
+html { scroll-behavior: smooth; }
+
+/* entrance */
+[data-fx] { opacity: 0; transform: translateY(16px); will-change: transform, opacity; }
+[data-fx].fx-in {
+  opacity: 1; transform: none;
+  transition: opacity .45s cubic-bezier(.16,1,.3,1), transform .45s cubic-bezier(.16,1,.3,1);
+  transition-delay: var(--fx-delay, 0ms);
+}
+[data-framer-appear-id] { opacity: .001; transform: scale(.996); }
+[data-framer-appear-id].fx-in {
+  opacity: 1; transform: none;
+  transition: opacity .3s cubic-bezier(.16,1,.3,1), transform .3s cubic-bezier(.16,1,.3,1);
+  transition-delay: .2s;
+}
+
+/* CTA: tap + glare (glare hanya saat hover) */
+a[data-framer-name="Primary"] {
+  position: relative; overflow: hidden;
+  transition: transform .3s cubic-bezier(.15,.45,.15,1.35), filter .3s ease;
+}
+a[data-framer-name="Primary"]:active { transform: scale(.96); }
+a[data-framer-name="Primary"] > .fx-glare {
+  position: absolute; inset: 0 -35%; z-index: 4; pointer-events: none;
+  transform: translateX(-100%);
+  background: linear-gradient(-45deg, transparent 6%, rgba(255,255,255,.28) 48%, transparent 92%);
+}
+@media (hover: hover) {
+  a[data-framer-name="Primary"]:hover > .fx-glare {
+    transition: transform 650ms ease-in-out; transform: translateX(100%);
+  }
+}
+
+/* akordeon */
+.framer-1ifwjco > .framer-7fp0d2 { display: none; }
+.framer-1ifwjco[data-open="true"] > .framer-7fp0d2 {
+  display: flex; animation: fx-acc .3s cubic-bezier(.22,1,.36,1);
+}
+@keyframes fx-acc { from { opacity: 0; transform: translateY(-4px); } }
+.framer-1ifwjco[data-open="true"] .framer-1clg3z3 svg { transform: rotate(45deg); }
+.framer-1ifwjco .framer-1clg3z3 svg { transition: transform .3s cubic-bezier(.22,1,.36,1); }
+.framer-1ifwjco[data-open="true"] { cursor: default; }
+.framer-h80zy6 { cursor: pointer; }
+.framer-1ifwjco[data-open="true"] .framer-h80zy6 { padding: 16px 16px 8px 20px; }
+
+/* drawer mobile */
+.mobile-open .framer-1alqb1 { height: auto !important; overflow: visible; }
+
+/* video latar produk */
+video { background-color: #f4f8fb; }
+
+/* fokus keyboard */
+a:focus-visible, button:focus-visible, [data-highlight]:focus-visible {
+  outline: 2px solid #0080ff; outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  [data-fx], [data-framer-appear-id] { opacity: 1 !important; transform: none !important; transition: none !important; }
+  a[data-framer-name="Primary"] > .fx-glare { display: none; }
+  .framer-1ifwjco[data-open="true"] > .framer-7fp0d2 { animation: none; }
+}
