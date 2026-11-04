@@ -4742,5 +4742,18 @@
     
     <!-- Snippet: tB69Nx_Oh --><script type="text/javascript" src="https://app.viral-loops.com/widgetsV2/core/loader.js" data-campaign-id="zVC8PFQHqi8as9Bz2ssSH9kAXgY" id="viral-loops-loader"></script><!-- SnippetEnd: tB69Nx_Oh --><!-- End of bodyEnd -->
 <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/vce701823e78c4301a35b7e07294d87301792088814092" integrity="sha512-UKNk8GbxkABxKcXYuLkO16EleLGUkcvJWtpSNmExE0Too3ZaFAxTscNWEc1OdAv5/BikHawapSCaiD2XCmp+Bw==" data-cf-beacon='{"version":"2024.11.0","token":"7de48a61ba3c4e6da1dda19a94f67813","r":1,"spa":2}' crossorigin="anonymous"></script>
+<script>
+(() => {
+  const vids = [...document.querySelectorAll('video')];
+  if (!vids.length) return;
+  vids.forEach(v => { v.muted = true; v.playsInline = true; v.setAttribute('playsinline', ''); v.preload = 'metadata'; });
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    const v = e.target;
+    if (e.isIntersecting) { if (v.readyState === 0) v.load(); v.play().catch(() => {}); }
+    else if (!v.paused) v.pause();
+  }), { rootMargin: '200px' });
+  vids.forEach(v => io.observe(v));
+})();
+</script>
 </body>
 </html>
