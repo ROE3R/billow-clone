@@ -1,21 +1,24 @@
-/* 0. router breakpoint: <810 → versi mobile, >=810 → desktop */
-(() => {
-  const inMobile = location.pathname.indexOf('/m/') !== -1;
-  const wantMobile = innerWidth < 810;
-  if (wantMobile === inMobile) return;
-  location.replace(wantMobile ? (inMobile ? location.pathname : 'm/index.html') : '../index.html');
+/* 0. router 4 tingkatan breakpoint (1440 / 1200 / 810 / <810) */
+(function () {
+  var tierOf = function (w) { return w >= 1440 ? '' : w >= 1200 ? 'd/' : w >= 810 ? 't/' : 'm/'; };
+  var dirOf = function (p) {
+    if (p.indexOf('m/index.html') > -1) return 'm/';
+    if (p.indexOf('t/index.html') > -1) return 't/';
+    if (p.indexOf('d/index.html') > -1) return 'd/';
+    return '';
+  };
+  var go = function () {
+    var want = tierOf(innerWidth), cur = dirOf(location.pathname);
+    if (want === cur) return;
+    var root = location.pathname
+      .replace('m/index.html', '').replace('t/index.html', '').replace('d/index.html', '')
+      .replace('index.html', '');
+    location.replace(root + want + 'index.html');
+  };
+  go();
+  setTimeout(go, 400);
+  addEventListener('resize', function () { clearTimeout(window.__rt); window.__rt = setTimeout(function () { location.reload(); }, 260); });
 })();
-setTimeout(() => {
-  const inMobile = location.pathname.indexOf('/m/') !== -1;
-  if ((innerWidth < 810) !== inMobile) location.replace((innerWidth < 810) ? location.pathname.replace(/\/?index\.html$/, '') + '/m/index.html' : '../index.html');
-}, 500);
-addEventListener('resize', () => {
-  clearTimeout(window.__rt);
-  window.__rt = setTimeout(() => {
-    const inMobile = location.pathname.indexOf('/m/') !== -1;
-    if ((innerWidth < 810) !== inMobile) location.reload();
-  }, 250);
-});
 
 /* Mekanisme animasi billow.so, ditulis ulang tanpa runtime Framer.
    Nilai diambil dari sumber asli (lihat MOTION-TOKENS.md di teardown). */
@@ -68,9 +71,17 @@ addEventListener('resize', () => {
       raf = 0;
       const y = scrollY;
       const base = innerWidth < 810 ? 36 : 0;
-      heroImg.style.transform = `translate(-50%, ${(base - y * .05).toFixed(2)}px)`;
+      heroImg.style.transform = `translate(-50%, ${(base + y * .0464).toFixed(2)}px)`;
     };
     addEventListener('scroll', () => { if (!raf) raf = requestAnimationFrame(tick); }, { passive: true });
+  }
+
+  /* 2b. parallax lapisan awan footer (150 px pada scroll maksimum) */
+  const cloud = document.querySelector('.framer-1wbjkgo');
+  if (cloud && !reduce) {
+    const upd = () => { cloud.style.transform = `translate3d(0, ${(-scrollY * .015).toFixed(2)}px, 0)`; };
+    upd();
+    addEventListener('scroll', upd, { passive: true });
   }
 
   /* 3. glare pada CTA */
