@@ -64,6 +64,10 @@ a:focus-visible, button:focus-visible, [data-highlight]:focus-visible {
 
 /* tab Why Switch: satu varian konten per tab */
 .why-var { display: none; }
+.why-sec-set { width: 100%; display: flex; flex-direction: column; }
+@media (min-width: 810px) { .why-sec-set { margin-bottom: -4px; } }
+.why-sec { display: none !important; }
+.why-sec.is-on { display: flex !important; }
 .why-var { flex-flow: row; }
 .why-var.is-on { display: block; }
 .why-var > .framer-xdb5ed { width: 100%; }
@@ -85,9 +89,9 @@ a:focus-visible, button:focus-visible, [data-highlight]:focus-visible {
 
 /* konten varian dipatok ke lebar aslinya supaya tinggi tidak melar */
 @media (min-width: 810px) {
-  .why-var { max-width: 1072px; margin: 0 auto; }
-  .why-var-group { margin-top: -41px; }
-  .why-var .framer-xdb5ed, .why-var .framer-1aun7bu { width: 1072px; max-width: 100%; }
+  .why-var { width: 100%; max-width: 1072px; margin: 0 auto; }
+  .why-var-group { margin-top: -44px; }
+  
 }
 
 @media (max-width: 809.98px) {
@@ -98,6 +102,7 @@ a:focus-visible, button:focus-visible, [data-highlight]:focus-visible {
   .why-var[data-var="Freelancers"], .why-var[data-var="Agencies"],
   .why-var[data-var="Creators"], .why-var[data-var="Consultants"] { height: 742px; overflow: hidden; }
   .why-var[data-var="Studios"] { height: 684px; overflow: hidden; }
+  .why-sec .framer-xdb5ed { width: 1072px !important; max-width: 100%; }
   .why-var-group { margin-top: -66px; }
 }
 
@@ -108,3 +113,5 @@ a.framer-1leoog1:not([style*="linear-gradient"]) {
   box-shadow: 0 0.72px 2.75px -1.17px rgba(0,64,255,.22), 0 2.75px 10.44px -2.33px rgba(0,64,255,.19), 0 12px 45.6px -3.5px rgba(0,64,255,.1);
 }
 a.framer-1leoog1:not([style*="linear-gradient"]) p { color: #fcfdff !important; }
+
+@media (min-width: 810px) and (max-width: 1439.98px) { .why-var-group { margin-top: -40px; } }
