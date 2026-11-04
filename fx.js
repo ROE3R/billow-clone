@@ -7,7 +7,7 @@
 })();
 setTimeout(() => {
   const inMobile = location.pathname.indexOf('/m/') !== -1;
-  if ((innerWidth < 810) !== inMobile) location.replace(new URL('m/index.html', location.href).href);
+  if ((innerWidth < 810) !== inMobile) location.replace((innerWidth < 810) ? location.pathname.replace(/\/?index\.html$/, '') + '/m/index.html' : '../index.html');
 }, 500);
 addEventListener('resize', () => {
   clearTimeout(window.__rt);
