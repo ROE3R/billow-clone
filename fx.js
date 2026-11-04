@@ -39,19 +39,23 @@ addEventListener('resize', () => {
   });
   els.forEach(el => el.setAttribute('data-fx', ''));
   if (!reduce) {
-    const io = new IntersectionObserver(es => {
+    /* reveal: cek posisi (bukan cuma IntersectionObserver) supaya tidak ada blok yang tertinggal invisible */
+    const reveal = () => {
       let n = 0;
-      es.forEach(e => {
-        if (!e.isIntersecting) return;
-        e.target.style.setProperty('--fx-delay', (n++ * 60) + 'ms');
-        e.target.classList.add('fx-in');
-        io.unobserve(e.target);
-      });
-    }, { rootMargin: '0px 0px -8% 0px', threshold: .08 });
-    els.forEach(el => io.observe(el));
-    /* panel demo pakai appear milik Framer (id 6ttxv6) */
-    const ap = document.querySelector('[data-framer-appear-id]');
-    if (ap) requestAnimationFrame(() => requestAnimationFrame(() => ap.classList.add('fx-in')));
+      for (const el of els) {
+        if (el.classList.contains('fx-in')) continue;
+        const r = el.getBoundingClientRect();
+        if (r.top < innerHeight * .92 && r.bottom > 0) {
+          el.style.setProperty('--fx-delay', Math.min(n++ * 50, 200) + 'ms');
+          el.classList.add('fx-in');
+        }
+      }
+    };
+    reveal();
+    addEventListener('scroll', () => { if (!reveal.__r) reveal.__r = requestAnimationFrame(() => { reveal.__r = 0; reveal(); }); }, { passive: true });
+    addEventListener('resize', reveal, { passive: true });
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) reveal(); });
+    setInterval(reveal, 700); /* jaring pengaman */
   } else {
     els.forEach(el => el.classList.add('fx-in'));
   }
