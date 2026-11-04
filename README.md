@@ -1,8 +1,8 @@
-# billow.so — clone statis
+# billow-clone
 
-Hasil teardown `billow.so`: HTML/CSS/aset asli, runtime Framer dibuang, animasi ditulis ulang
-di `fx.js` (entrance .3s cubic-bezier(.16,1,.3,1), parallax, glare, akordeon, tab, drawer).
-Tanpa build step — buka `index.html`.
+Dua versi, satu sumber: billow.so.
 
-Beda dari sumber: tanpa runtime Framer (jadi tanpa ISR/CDN Framer), video autoplay via IO,
-FAQ jawaban diambil dari situs live, tombol CTA mengarah ke beta.billow.so.
+- `/` — **mirror penuh**: HTML asli + runtime Framer + aset yang dilokalkan (semua `framerusercontent.com` di-rewrite ke `files/`). Animasi, parallax, tab, akordeon, dan tabel mockup jalan apa adanya karena mesin aslinya ikut disajikan.
+- `/clone/` — versi bangun-ulang manual (tanpa runtime Framer): markup hasil render dibekukan per breakpoint. Dipakai sebagai pembanding.
+
+Selisih mirror vs aslinya: 0,00–0,32 dari 255 per frame (13 frame, 1440 px); tinggi halaman 10912 px sama.
