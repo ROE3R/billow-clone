@@ -71,7 +71,7 @@
       raf = 0;
       const y = scrollY;
       const base = innerWidth < 810 ? 36 : 0;
-      heroImg.style.transform = `translate(-50%, ${(base + y * .0464).toFixed(2)}px)`;
+      heroImg.style.transform = `translate(-50%, ${(base + y * .05).toFixed(2)}px)`;
     };
     addEventListener('scroll', () => { if (!raf) raf = requestAnimationFrame(tick); }, { passive: true });
   }

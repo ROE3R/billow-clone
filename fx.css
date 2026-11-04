@@ -26,11 +26,11 @@ a[data-framer-name="Primary"] > .fx-glare {
   transform: translateX(-100%);
   background: linear-gradient(-45deg, transparent 6%, rgba(255,255,255,.28) 48%, transparent 92%);
 }
-@media (hover: hover) {
-  a[data-framer-name="Primary"]:hover > .fx-glare {
-    transition: transform 650ms ease-in-out; transform: translateX(100%);
-  }
+a[data-framer-name="Primary"]:hover > .fx-glare,
+a[data-framer-name="Primary"].fx-hover > .fx-glare {
+  transition: transform 650ms ease-in-out; transform: translateX(100%);
 }
+a[data-framer-name="Primary"]:hover { filter: saturate(1.06); }
 
 /* akordeon */
 .framer-1ifwjco > .framer-7fp0d2 { display: none; }
